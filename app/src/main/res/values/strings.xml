@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SerieSeassons</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Title</string>
+    <string name="popularity">Popularity</string>
+    <string name="rating">Rating</string>
+    <string name="phone_tag">phone</string>
+</resources>
