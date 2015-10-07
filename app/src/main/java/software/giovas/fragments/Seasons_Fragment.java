@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -26,15 +25,15 @@ import software.giovas.utils.JSONParser;
  */
 public class Seasons_Fragment extends Fragment implements onNetworkDataListener {
 
-    private EmptyRecyclerView list;
+    private EmptyRecyclerView grid;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_seasons,container,false);
-        list = (EmptyRecyclerView)v.findViewById(R.id.grid);
+        grid = (EmptyRecyclerView)v.findViewById(R.id.grid);
         View empty = v.findViewById(R.id.emptyView);
-        list.setEmptyView(empty);
+        grid.setEmptyView(empty);
         NetworkConnection networkConnection = new NetworkConnection(getActivity(), NetworkConnection.Request.GET,this);
         networkConnection.execute();
         return v;
@@ -43,11 +42,11 @@ public class Seasons_Fragment extends Fragment implements onNetworkDataListener 
     @Override
     public void onReceivedData(JSONArray object) {
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
-        list.setHasFixedSize(true);
-        list.setLayoutManager(glm);
+        grid.setHasFixedSize(true);
+        grid.setLayoutManager(glm);
         ArrayList<Season> seasons = JSONParser.getSeasonsData(object,getActivity());
         ImageAdapter adapter = new ImageAdapter(getActivity(),seasons);
-        list.setAdapter(adapter);
+        grid.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 

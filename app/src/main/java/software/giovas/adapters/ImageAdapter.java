@@ -2,6 +2,8 @@ package software.giovas.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import software.giovas.objects.Season;
+import software.giovas.serieseassons.Episodes;
+import software.giovas.serieseassons.MainActivity;
 import software.giovas.serieseassons.R;
 
 /**
@@ -49,20 +53,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         int seasonNumber = seasons.get(position).getNumber();
         viewHolder.titleSeason.setText(mContext.getString(R.string.season_title, seasonNumber));
         final int pos = position;
-        /*viewHolder.posterSeason.setOnClickListener(new View.OnClickListener() {
+        viewHolder.posterSeason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (MainActivity.two_views) {
-                    listener.onMovieSelected(seasons.get(pos));
+                    //listener.onMovieSelected(seasons.get(pos));
                 } else {
                     Bundle args = new Bundle();
-                    args.putParcelable("movieSelected", seasons.get(pos));
-                    Intent intent = new Intent(mContext, DetailActivity.class);
+                    args.putParcelable("seasonSelected", seasons.get(pos));
+                    Intent intent = new Intent(mContext, Episodes.class);
                     intent.putExtras(args);
                     mContext.startActivity(intent);
                 }
             }
-        });*/
+        });
         viewHolder.episodesSeason.setText(mContext.getString(R.string.episodes, seasons.get(position).getEpisodes()));
         viewHolder.ratingSeason.setText(mContext.getString(R.string.rating, seasons.get(position).getRating()));
         /*if(MainActivity.two_views && position == 0 && isFirstTime){
