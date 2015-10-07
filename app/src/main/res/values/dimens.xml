@@ -4,6 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="normal_elevation">4dp</dimen>
+    <dimen name="extended_padding">10dp</dimen>
     <dimen name="common_padding">5dp</dimen>
     <dimen name="extended_elevation">6dp</dimen>
+    <dimen name="square_side">53dp</dimen>
 </resources>

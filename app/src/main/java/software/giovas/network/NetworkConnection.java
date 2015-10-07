@@ -7,7 +7,6 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
     public NetworkConnection(Context c){
         mContext = c;
         listener = (onNetworkDataListener) mContext;
-        typeRequest = Request.GET;
+        typeRequest = Request.SEASONS;
     }
 
     public NetworkConnection(Context c, Request type, onNetworkDataListener networkDataListener){
@@ -53,10 +52,11 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
         final String SHOWS_PATH = "shows";
         final String SEASONS_PATH = "seasons";
         final String EXTENDED_PARAM = "extended";
+        final String NAME_SEASON = "game-of-thrones";
 
         requestURL = Uri.parse(BASE_URL).buildUpon()
                 .appendPath(SHOWS_PATH)
-                .appendPath("game-of-thrones")
+                .appendPath(NAME_SEASON)
                 .appendPath(SEASONS_PATH)
                 .appendQueryParameter(EXTENDED_PARAM,"images,full")
                 .build();
@@ -129,7 +129,7 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
     }
 
     public enum Request {
-        POST("POST"),GET("GET");
+        EPISODES("GET"), SEASONS("GET");
         private String value;
         Request(String value){
             this.value = value;
