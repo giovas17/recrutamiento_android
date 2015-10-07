@@ -25,69 +25,68 @@ import software.giovas.serieseassons.R;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<Season> movies;
+    private ArrayList<Season> seasons;
     private boolean isFirstTime;
 
-    public ImageAdapter() {
-    }
-
-    public ImageAdapter(Context context, ArrayList<Season> all_movies) {
+    public ImageAdapter(Context context, ArrayList<Season> allSeasons) {
         mContext = context;
-        movies = all_movies;
+        seasons = allSeasons;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        /*ViewHolder viewHolder;
+        ViewHolder viewHolder;
         LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
-        View convertView = inflater.inflate(R.layout.poster_preview_item, null, false);
+        View convertView = inflater.inflate(R.layout.poster_seasson_item, null, false);
         viewHolder = new ViewHolder(convertView);
-        return viewHolder;*/
-        return null;
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        /*Picasso.with(mContext).load(movies.get(position).getPoster_image_path()).into(viewHolder.posterMovie);
-        viewHolder.posterMovie.setTag(movies.get(position));
-        final int pos = position;
-        viewHolder.posterMovie.setOnClickListener(new View.OnClickListener() {
+        Picasso.with(mContext).load(seasons.get(position).getPoster())
+                .placeholder(mContext.getResources().getDrawable(R.drawable.serie_thumbnail_placeholder))
+                .error(mContext.getResources().getDrawable(R.drawable.serie_thumbnail_placeholder))
+                .into(viewHolder.posterSeason);
+        viewHolder.posterSeason.setTag(seasons.get(position));
+        /*final int pos = position;
+        viewHolder.posterSeason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (MainActivity.two_views) {
-                    listener.onMovieSelected(movies.get(pos));
+                    listener.onMovieSelected(seasons.get(pos));
                 } else {
                     Bundle args = new Bundle();
-                    args.putParcelable("movieSelected", movies.get(pos));
+                    args.putParcelable("movieSelected", seasons.get(pos));
                     Intent intent = new Intent(mContext, DetailActivity.class);
                     intent.putExtras(args);
                     mContext.startActivity(intent);
                 }
             }
         });
-        viewHolder.titleMovie.setText(movies.get(position).getTitle());
-        viewHolder.popularityMovie.setText(mContext.getString(R.string.popularity_text, movies.get(position).getPopularity()));
-        viewHolder.ratingMovie.setText(mContext.getString(R.string.rating_text,movies.get(position).getRating()));
+        viewHolder.titleMovie.setText(seasons.get(position).getTitle());
+        viewHolder.popularityMovie.setText(mContext.getString(R.string.popularity_text, seasons.get(position).getPopularity()));
+        viewHolder.ratingMovie.setText(mContext.getString(R.string.rating_text, seasons.get(position).getRating()));
         if(MainActivity.two_views && position == 0 && isFirstTime){
-            listener.onMovieSelected(movies.get(position));
+            listener.onMovieSelected(seasons.get(position));
             isFirstTime = false;
         }*/
     }
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return seasons.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView posterMovie;
+        public final ImageView posterSeason;
         public final TextView titleMovie;
         public final TextView popularityMovie;
         public final TextView ratingMovie;
 
         public ViewHolder(View v){
             super(v);
-            posterMovie = (ImageView)v.findViewById(R.id.imagePosterItem);
+            posterSeason = (ImageView)v.findViewById(R.id.imagePosterItem);
             titleMovie = (TextView)v.findViewById(R.id.textTitleMovie);
             popularityMovie = (TextView)v.findViewById(R.id.textPopularity);
             ratingMovie = (TextView)v.findViewById(R.id.textRating);

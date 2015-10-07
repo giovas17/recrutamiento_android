@@ -1,6 +1,5 @@
 package software.giovas.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import software.giovas.network.NetworkConnection;
 import software.giovas.objects.EmptyRecyclerView;
 import software.giovas.objects.Season;
 import software.giovas.serieseassons.R;
+import software.giovas.utils.JSONParser;
 
 /**
  * Created by darkgeat on 10/6/15.
@@ -30,8 +31,8 @@ public class Seasons_Fragment extends Fragment implements onNetworkDataListener 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_seassons,container,false);
-        list = (EmptyRecyclerView)v.findViewById(R.id.list);
+        View v = inflater.inflate(R.layout.fragment_seasons,container,false);
+        list = (EmptyRecyclerView)v.findViewById(R.id.grid);
         list.setEmptyView(inflater.inflate(R.layout.empty_view,null));
         NetworkConnection networkConnection = new NetworkConnection(getActivity(), NetworkConnection.Request.GET,this);
         networkConnection.execute();
@@ -39,11 +40,14 @@ public class Seasons_Fragment extends Fragment implements onNetworkDataListener 
     }
 
     @Override
-    public void onReceivedData(JSONObject object) {
+    public void onReceivedData(JSONArray object) {
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 3);
         list.setHasFixedSize(true);
         list.setLayoutManager(glm);
-        list.setAdapter(new ImageAdapter());
+        ArrayList<Season> seasons = JSONParser.getSeasonsData(object,getActivity());
+        ImageAdapter adapter = new ImageAdapter(getActivity(),seasons);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

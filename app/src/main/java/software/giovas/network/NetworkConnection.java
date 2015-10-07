@@ -52,11 +52,13 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
         final String BASE_URL = mContext.getString(R.string.base_URL);
         final String SHOWS_PATH = "shows";
         final String SEASONS_PATH = "seasons";
+        final String EXTENDED_PARAM = "extended";
 
         requestURL = Uri.parse(BASE_URL).buildUpon()
                 .appendPath(SHOWS_PATH)
                 .appendPath("game-of-thrones")
                 .appendPath(SEASONS_PATH)
+                .appendQueryParameter(EXTENDED_PARAM,"images")
                 .build();
 
         Log.w(NETWORK_TAG, requestURL.toString());
@@ -113,7 +115,7 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
             }else {
                 try {
                     JSONArray data = new JSONArray(responseJsonStr);
-                    //listener.onReceivedData(data);
+                    listener.onReceivedData(data);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

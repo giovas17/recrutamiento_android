@@ -5,10 +5,14 @@
     <string name="popularity">Popularity</string>
     <string name="rating">Rating</string>
     <string name="phone_tag" transladable="false">phone</string>
+    <!-- Connection Settings -->
     <string name="connection_type" transladable="false">application/json</string>
     <string name="client_id" transladable="false">0b6fc75bf56b7dc8e7d02f802193b5e0cc0b0cb8ffa4eaa1cf00bda24c4edb07</string>
     <string name="tracktv_api_version" transladable="false">2</string>
     <string name="base_URL" transladable="false">https://api-v2launch.trakt.tv</string>
     <string name="request_api_key">trakt-api-key</string>
     <string name="request_api_version">trakt-api-version</string>
+    <!-- Headers Activities -->
+    <string name="header_main">Seasons</string>
+    <string name="header_episodes">Episodes</string>
 </resources>
