@@ -33,7 +33,8 @@ public class Seasons_Fragment extends Fragment implements onNetworkDataListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_seasons,container,false);
         list = (EmptyRecyclerView)v.findViewById(R.id.grid);
-        list.setEmptyView(inflater.inflate(R.layout.empty_view,null));
+        View empty = v.findViewById(R.id.emptyView);
+        list.setEmptyView(empty);
         NetworkConnection networkConnection = new NetworkConnection(getActivity(), NetworkConnection.Request.GET,this);
         networkConnection.execute();
         return v;
@@ -41,7 +42,7 @@ public class Seasons_Fragment extends Fragment implements onNetworkDataListener 
 
     @Override
     public void onReceivedData(JSONArray object) {
-        GridLayoutManager glm = new GridLayoutManager(getActivity(), 3);
+        GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
         list.setHasFixedSize(true);
         list.setLayoutManager(glm);
         ArrayList<Season> seasons = JSONParser.getSeasonsData(object,getActivity());
