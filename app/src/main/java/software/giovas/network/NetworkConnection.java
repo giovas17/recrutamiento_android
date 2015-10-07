@@ -58,7 +58,7 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
                 .appendPath(SHOWS_PATH)
                 .appendPath("game-of-thrones")
                 .appendPath(SEASONS_PATH)
-                .appendQueryParameter(EXTENDED_PARAM,"images")
+                .appendQueryParameter(EXTENDED_PARAM,"images,full")
                 .build();
 
         Log.w(NETWORK_TAG, requestURL.toString());

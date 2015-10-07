@@ -48,10 +48,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/popularity"
+                    android:text="@string/episodes"
                     android:textColor="@android:color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:id="@+id/textPopularity" />
+                    android:id="@+id/textEpisodes" />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

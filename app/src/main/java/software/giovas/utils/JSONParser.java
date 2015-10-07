@@ -23,6 +23,9 @@ public class JSONParser {
         final String IMAGES = "images";
         final String THUMB = "thumb";
         final String FULL = "full";
+        final String EPISODES = "episode_count";
+        final String RATING = "rating";
+        final String VOTES = "votes";
 
         ArrayList<Season> seasons = new ArrayList<>();
         for(int i = 0 ; i < objectArray.length() ; i++){
@@ -30,6 +33,9 @@ public class JSONParser {
                 JSONObject object = objectArray.getJSONObject(i);
                 Season season = new Season();
                 season.setNumber(object.getInt(NUMBER));
+                season.setEpisodes(object.getInt(EPISODES));
+                season.setVotes(object.getInt(VOTES));
+                season.setRating(object.getDouble(RATING));
                 JSONObject image = object.getJSONObject(IMAGES);
                 JSONObject poster = image.getJSONObject(POSTER);
                 season.setPoster(poster.getString(THUMB));
