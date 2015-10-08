@@ -7,7 +7,6 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,13 +30,14 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
     private onNetworkDataListener listener;
     private String responseJsonStr = null;
     private Request typeRequest;
-    private boolean favorite = false;
+    private int seasonNumber;
     private ArrayList<Season> seasons = new ArrayList<>();
 
-    public NetworkConnection(Context c){
+    public NetworkConnection(Context c, int seasonNumber, onNetworkDataListener networkDataListener){
         mContext = c;
-        listener = (onNetworkDataListener) mContext;
-        typeRequest = Request.GET;
+        listener = networkDataListener;
+        typeRequest = Request.EPISODES;
+        this.seasonNumber = seasonNumber;
     }
 
     public NetworkConnection(Context c, Request type, onNetworkDataListener networkDataListener){
@@ -53,14 +53,23 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
         final String SHOWS_PATH = "shows";
         final String SEASONS_PATH = "seasons";
         final String EXTENDED_PARAM = "extended";
+        final String NAME_SEASON = "game-of-thrones";
 
-        requestURL = Uri.parse(BASE_URL).buildUpon()
-                .appendPath(SHOWS_PATH)
-                .appendPath("game-of-thrones")
-                .appendPath(SEASONS_PATH)
-                .appendQueryParameter(EXTENDED_PARAM,"images,full")
-                .build();
-
+        if(typeRequest == Request.SEASONS) {
+            requestURL = Uri.parse(BASE_URL).buildUpon()
+                    .appendPath(SHOWS_PATH)
+                    .appendPath(NAME_SEASON)
+                    .appendPath(SEASONS_PATH)
+                    .appendQueryParameter(EXTENDED_PARAM, "images,full")
+                    .build();
+        }else if(typeRequest == Request.EPISODES){
+            requestURL = Uri.parse(BASE_URL).buildUpon()
+                    .appendPath(SHOWS_PATH)
+                    .appendPath(NAME_SEASON)
+                    .appendPath(SEASONS_PATH)
+                    .appendPath(String.valueOf(seasonNumber))
+                    .build();
+        }
         Log.w(NETWORK_TAG, requestURL.toString());
         return retrieveData(requestURL);
     }
@@ -110,15 +119,11 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if(result){
-            if(favorite){
-                listener.onReceivedData(seasons);
-            }else {
-                try {
-                    JSONArray data = new JSONArray(responseJsonStr);
-                    listener.onReceivedData(data);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            try {
+                JSONArray data = new JSONArray(responseJsonStr);
+                listener.onReceivedData(data);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -129,7 +134,7 @@ public class NetworkConnection extends AsyncTask<String,Void,Boolean> {
     }
 
     public enum Request {
-        POST("POST"),GET("GET");
+        EPISODES("GET"), SEASONS("GET");
         private String value;
         Request(String value){
             this.value = value;

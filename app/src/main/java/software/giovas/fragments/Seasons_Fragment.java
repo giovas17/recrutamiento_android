@@ -30,11 +30,11 @@ public class Seasons_Fragment extends Fragment implements onNetworkDataListener 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_seasons,container,false);
+        View v = inflater.inflate(R.layout.fragment_seasons, container, false);
         grid = (EmptyRecyclerView)v.findViewById(R.id.grid);
         View empty = v.findViewById(R.id.emptyView);
         grid.setEmptyView(empty);
-        NetworkConnection networkConnection = new NetworkConnection(getActivity(), NetworkConnection.Request.GET,this);
+        NetworkConnection networkConnection = new NetworkConnection(getActivity(), NetworkConnection.Request.SEASONS,this);
         networkConnection.execute();
         return v;
     }

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Seasons");
+        getSupportActionBar().setTitle("Seasons -- " + getString(R.string.showName));
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new Seasons_Fragment()).commit();
 
