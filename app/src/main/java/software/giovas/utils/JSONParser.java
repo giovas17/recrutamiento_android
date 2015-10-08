@@ -49,6 +49,22 @@ public class JSONParser {
         return seasons;
     }
 
+    public static ArrayList<String> getEpisodesData(JSONArray objectArray){
 
+        // ----- Keys from JSON object -------
+        final String TITLE = "title";
+
+        ArrayList<String> episodes = new ArrayList<>();
+        for(int i = 0 ; i < objectArray.length() ; i++){
+            try {
+                JSONObject object = objectArray.getJSONObject(i);
+                String episodeName = object.getString(TITLE);
+                episodes.add(episodeName);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return episodes;
+    }
 
 }

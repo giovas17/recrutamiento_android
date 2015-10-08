@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import software.giovas.objects.Season;
 import software.giovas.serieseassons.R;
 
 /**
@@ -21,10 +22,12 @@ public class EpisodesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_ITEM = 1;
     private Context mContext;
     private ArrayList<String> episodes;
+    private Season season;
 
-    public EpisodesAdapter(Context context, ArrayList<String> data){
+    public EpisodesAdapter(Context context, ArrayList<String> data, Season season){
         mContext = context;
         episodes = data;
+        this.season = season;
     }
 
     @Override
@@ -34,10 +37,10 @@ public class EpisodesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
 
         if (viewType == TYPE_ITEM) {
-            View convertView = inflater.inflate(R.layout.episode_item, null, false);
+            View convertView = inflater.inflate(R.layout.episode_item, parent, false);
             viewHolder = new ViewHolder(convertView);
         } else if (viewType == TYPE_HEADER) {
-            View convertView = inflater.inflate(R.layout.header_list, null, false);
+            View convertView = inflater.inflate(R.layout.header_list, parent, false);
             viewHolder = new VHHeader(convertView);
         }
 
@@ -48,8 +51,16 @@ public class EpisodesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             //cast holder to ViewHolder and set data
+            ((ViewHolder) holder).episodeName.setText(episodes.get(position));
+            ((ViewHolder) holder).episodeNumber.setText(mContext.getString(R.string.episode_number,position+1));
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.
+            ((VHHeader) holder).tittleSeason.setText(mContext.getString(R.string.season_title,season.getNumber()));
+            ((VHHeader) holder).ratingSeason.setText(mContext.getString(R.string.rating_value,season.getRating()));
+            ((VHHeader) holder).votesSeason.setText(mContext.getString(R.string.votes,season.getVotes()));
+            ((VHHeader) holder).episodesSeason.setText(mContext.getString(R.string.episodes,episodes.size()));
+            ((VHHeader) holder).episodeName.setText(episodes.get(position));
+            ((VHHeader) holder).episodeNumber.setText(mContext.getString(R.string.episode_number,position+1));
         }
     }
 
@@ -62,7 +73,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return 0;
+        return episodes.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,11 +90,19 @@ public class EpisodesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     static class VHHeader extends RecyclerView.ViewHolder{
         public final TextView ratingSeason;
         public final TextView tittleSeason;
+        public final TextView votesSeason;
+        public final TextView episodesSeason;
+        public final TextView episodeNumber;
+        public final TextView episodeName;
 
         public VHHeader(View view){
             super(view);
             ratingSeason = (TextView)view.findViewById(R.id.textRatingHeader);
             tittleSeason = (TextView)view.findViewById(R.id.textTittleHeader);
+            votesSeason = (TextView)view.findViewById(R.id.textVotesHeader);
+            episodesSeason = (TextView)view.findViewById(R.id.textEpisodesHeader);
+            episodeNumber = (TextView)view.findViewById(R.id.epNumber);
+            episodeName = (TextView)view.findViewById(R.id.epName);
         }
 
     }
